@@ -11,7 +11,7 @@ func main() {
 	config.LoadEnv()
 	env := config.GetEnv("ENV", "")
 	log.Print("Environment: ", env)
-	config.SetupDatabase()
+	db := config.SetupDatabase()
 	log.Print("Database connected.")
-	routes.RegisterRoutes()
+	routes.RegisterRoutes(db)
 }
