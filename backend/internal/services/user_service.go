@@ -20,7 +20,8 @@ func NewUserService(userRepository repositories.IUserRepository) IUserService {
 
 func (u *UserService) Create(createUserInput dto.CreateUserInput) (*models.User, error) {
 	newUser := models.User{
-		Email: createUserInput.Email,
+		Email:        createUserInput.Email,
+		PasswordHash: createUserInput.Passowrd,
 	}
 	return u.userRepository.Create(newUser)
 }
