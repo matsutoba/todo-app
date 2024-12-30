@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"todo-app/internal/config"
+	"todo-app/internal/routes"
 )
 
 func main() {
@@ -12,4 +13,5 @@ func main() {
 	log.Print("Environment: ", env)
 	config.SetupDatabase()
 	log.Print("Database connected.")
+	routes.RegisterRoutes()
 }
