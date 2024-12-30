@@ -4,6 +4,7 @@ import (
 	"todo-app/internal/dto"
 	"todo-app/internal/models"
 	"todo-app/internal/repositories"
+	"todo-app/internal/utils"
 )
 
 type IUserService interface {
@@ -19,9 +20,14 @@ func NewUserService(userRepository repositories.IUserRepository) IUserService {
 }
 
 func (u *UserService) Create(createUserInput dto.CreateUserInput) (*models.User, error) {
+	hashedPassword, err := utils.HashPassword(createUserInput.Passowrd)
+	if err != nil {
+		return nil, err
+	}
+
 	newUser := models.User{
 		Email:        createUserInput.Email,
-		PasswordHash: createUserInput.Passowrd,
+		PasswordHash: hashedPassword,
 	}
 	return u.userRepository.Create(newUser)
 }
