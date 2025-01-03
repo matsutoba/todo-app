@@ -5,6 +5,7 @@ import (
 	"log"
 	"todo-app/internal/config"
 	"todo-app/internal/controllers"
+	"todo-app/internal/middlewares"
 	"todo-app/internal/repositories"
 	"todo-app/internal/services"
 
@@ -31,7 +32,7 @@ func RegisterRoutes(db *gorm.DB) {
 	userRouter.POST("/register", userController.Create)
 	userRouter.POST("/login", userController.Login)
 
-	todoRouter := r.Group("/todos")
+	todoRouter := r.Group("/todos", middlewares.AuthMiddleware(userService))
 	todoRouter.GET("", todoController.FindAll)
 
 	log.Print("Server running on ", endpoint)
