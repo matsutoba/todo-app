@@ -1,7 +1,9 @@
 package services
 
 import (
+	stdErrors "errors"
 	"todo-app/internal/dto"
+	"todo-app/internal/errors"
 	"todo-app/internal/models"
 	"todo-app/internal/repositories"
 	"todo-app/internal/utils"
@@ -29,5 +31,15 @@ func (u *UserService) Create(createUserInput dto.CreateUserInput) (*models.User,
 		Email:        createUserInput.Email,
 		PasswordHash: hashedPassword,
 	}
-	return u.userRepository.Create(newUser)
+
+	user, err := u.userRepository.Create(newUser)
+
+	if err != nil {
+		if stdErrors.Is(err, errors.ErrDuplicateEntry) {
+			return nil, errors.ErrUserAlreadyExists
+		}
+		return nil, err
+	}
+
+	return user, nil
 }

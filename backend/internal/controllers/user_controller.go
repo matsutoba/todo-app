@@ -3,6 +3,7 @@ package controllers
 import (
 	"net/http"
 	"todo-app/internal/dto"
+	"todo-app/internal/errors"
 	"todo-app/internal/services"
 
 	"github.com/gin-gonic/gin"
@@ -29,7 +30,7 @@ func (u *UserController) Create(c *gin.Context) {
 
 	newUser, err := u.service.Create(input)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		errors.HandleError(c, err)
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": newUser})

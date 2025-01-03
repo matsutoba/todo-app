@@ -1,6 +1,7 @@
 package repositories
 
 import (
+	"todo-app/internal/errors"
 	"todo-app/internal/models"
 
 	"gorm.io/gorm"
@@ -21,7 +22,7 @@ func NewUserRepository(db *gorm.DB) IUserRepository {
 func (r *UserRepository) Create(newUser models.User) (*models.User, error) {
 	result := r.db.Create(&newUser)
 	if result.Error != nil {
-		return nil, result.Error
+		return nil, errors.ErrDuplicateEntry
 	}
 	return &newUser, nil
 }
