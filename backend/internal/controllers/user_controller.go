@@ -44,10 +44,10 @@ func (u *UserController) Login(c *gin.Context) {
 		return
 	}
 
-	_, err := u.service.Login(input)
+	token, err := u.service.Login(input)
 	if err != nil {
 		errors.HandleError(c, err)
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": "OK"})
+	c.JSON(http.StatusOK, gin.H{"token": token})
 }

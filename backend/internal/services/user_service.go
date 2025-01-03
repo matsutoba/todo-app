@@ -2,6 +2,7 @@ package services
 
 import (
 	stdErrors "errors"
+	"log"
 	"todo-app/internal/dto"
 	"todo-app/internal/errors"
 	"todo-app/internal/models"
@@ -11,7 +12,7 @@ import (
 
 type IUserService interface {
 	Create(newUser dto.CreateUserInput) (*models.User, error)
-	Login(user dto.LoginUserInput) (*models.User, error)
+	Login(user dto.LoginUserInput) (*string, error)
 }
 
 type UserService struct {
@@ -45,7 +46,7 @@ func (u *UserService) Create(createUserInput dto.CreateUserInput) (*models.User,
 	return user, nil
 }
 
-func (u *UserService) Login(loginUserInput dto.LoginUserInput) (*models.User, error) {
+func (u *UserService) Login(loginUserInput dto.LoginUserInput) (*string, error) {
 	user, err := u.userRepository.FindByEmail(loginUserInput.Email)
 
 	if err != nil {
@@ -59,5 +60,13 @@ func (u *UserService) Login(loginUserInput dto.LoginUserInput) (*models.User, er
 		return nil, errors.ErrUserNotFound
 	}
 
-	return user, nil
+	token, err := utils.CreateToken(user)
+
+	log.Print("Token", token)
+
+	if err != nil {
+		return nil, errors.ErrCreateToken
+	}
+
+	return token, nil
 }

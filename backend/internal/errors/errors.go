@@ -28,4 +28,5 @@ var (
 	// Application Errors
 	ErrUserAlreadyExists = NewAppError(2001, "user already exists")
 	ErrUserNotFound      = NewAppError(2002, "user not found")
+	ErrCreateToken       = NewAppError(2003, "error creating token")
 )
