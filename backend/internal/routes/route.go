@@ -34,6 +34,7 @@ func RegisterRoutes(db *gorm.DB) {
 
 	todoRouter := r.Group("/todos", middlewares.AuthMiddleware(userService))
 	todoRouter.GET("", todoController.FindAll)
+	todoRouter.POST("", todoController.Create)
 
 	log.Print("Server running on ", endpoint)
 

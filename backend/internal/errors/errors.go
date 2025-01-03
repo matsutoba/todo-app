@@ -24,6 +24,7 @@ var (
 	// DB Errors
 	ErrDuplicateEntry = NewAppError(1001, "duplicate entry")
 	ErrNotFound       = NewAppError(1002, "not found")
+	ErrInsertFailed   = NewAppError(1003, "create failed")
 
 	// Application Errors
 	ErrUserAlreadyExists = NewAppError(2001, "user already exists")
@@ -32,4 +33,6 @@ var (
 	ErrParseToken        = NewAppError(2004, "error parsing token")
 	ErrExpiredToken      = NewAppError(2005, "token expired")
 	ErrTodoNotFound      = NewAppError(2006, "todo not found")
+	ErrCreateTodoFailed  = NewAppError(2007, "create todo failed")
+	ErrInvalidRequest    = NewAppError(2008, "invalid request")
 )
