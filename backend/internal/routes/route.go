@@ -33,6 +33,7 @@ func RegisterRoutes(db *gorm.DB) {
 	userRouter.POST("/login", userController.Login)
 
 	todoRouter := r.Group("/todos", middlewares.AuthMiddleware(userService))
+	todoRouter.GET("", todoController.FindAll)
 	todoRouter.GET("/:id", todoController.FindById)
 	todoRouter.POST("", todoController.Create)
 	todoRouter.PUT("/:id", todoController.Update)
