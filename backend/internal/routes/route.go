@@ -24,6 +24,7 @@ func RegisterRoutes(db *gorm.DB) {
 	userController := controllers.NewUserController(userService)
 
 	r.POST("/register", userController.Create)
+	r.POST("/login", userController.Login)
 
 	log.Print("Server running on ", endpoint)
 

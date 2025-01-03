@@ -23,7 +23,9 @@ func NewAppError(code int, message string) *AppError {
 var (
 	// DB Errors
 	ErrDuplicateEntry = NewAppError(1001, "duplicate entry")
+	ErrNotFound       = NewAppError(1002, "not found")
 
 	// Application Errors
 	ErrUserAlreadyExists = NewAppError(2001, "user already exists")
+	ErrUserNotFound      = NewAppError(2002, "user not found")
 )
