@@ -2,7 +2,6 @@ package services
 
 import (
 	stdErrors "errors"
-	"log"
 	"todo-app/internal/dto"
 	"todo-app/internal/errors"
 	"todo-app/internal/models"
@@ -13,6 +12,7 @@ import (
 type IUserService interface {
 	Create(newUser dto.CreateUserInput) (*models.User, error)
 	Login(user dto.LoginUserInput) (*string, error)
+	GetUserFromToken(token string) (*models.User, error)
 }
 
 type UserService struct {
@@ -61,8 +61,6 @@ func (u *UserService) Login(loginUserInput dto.LoginUserInput) (*string, error) 
 	}
 
 	token, err := utils.CreateToken(user)
-
-	log.Print("Token", token)
 
 	if err != nil {
 		return nil, errors.ErrCreateToken
