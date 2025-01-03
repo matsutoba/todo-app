@@ -21,6 +21,7 @@
 go.work
 go.work.sum
 backend/tmp
+tmp
 
 # env file
 .env
