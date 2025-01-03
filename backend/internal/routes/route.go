@@ -27,9 +27,12 @@ func RegisterRoutes(db *gorm.DB) {
 	todoService := services.NewTodoService(todoRepository)
 	todoController := controllers.NewTodoController(todoService)
 
-	r.POST("/register", userController.Create)
-	r.POST("/login", userController.Login)
-	r.GET("/todos", todoController.FindAll)
+	userRouter := r.Group("/users")
+	userRouter.POST("/register", userController.Create)
+	userRouter.POST("/login", userController.Login)
+
+	todoRouter := r.Group("/todos")
+	todoRouter.GET("", todoController.FindAll)
 
 	log.Print("Server running on ", endpoint)
 
