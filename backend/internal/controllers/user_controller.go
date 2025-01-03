@@ -11,6 +11,7 @@ import (
 
 type IUserController interface {
 	Create(c *gin.Context)
+	Login(c *gin.Context)
 }
 
 type UserController struct {
@@ -34,4 +35,19 @@ func (u *UserController) Create(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": newUser})
+}
+
+func (u *UserController) Login(c *gin.Context) {
+	var input dto.LoginUserInput
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	token, err := u.service.Login(input)
+	if err != nil {
+		errors.HandleError(c, err)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"token": token})
 }
