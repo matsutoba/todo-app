@@ -11,6 +11,8 @@ import (
 type ITodoService interface {
 	Create(todo dto.CreateTodoInput) (*models.Todo, error)
 	FindAll() (*[]models.Todo, error)
+	FindById(id uint) (*models.Todo, error)
+	Update(todoId uint, todo dto.UpdateTodoInput) (*models.Todo, error)
 }
 
 type TodoService struct {
@@ -47,4 +49,36 @@ func (t *TodoService) FindAll() (*[]models.Todo, error) {
 		return nil, errors.ErrNotFound
 	}
 	return &todos, nil
+}
+
+func (t *TodoService) FindById(id uint) (*models.Todo, error) {
+	todo, err := t.todoRepository.FindById(id)
+	if err != nil {
+		return nil, errors.ErrTodoNotFound
+	}
+	return todo, nil
+}
+
+func (t *TodoService) Update(todoId uint, updateTodoInput dto.UpdateTodoInput) (*models.Todo, error) {
+	dueDate, err := time.Parse("2006-01-02", updateTodoInput.DueDate)
+	if err != nil {
+		return nil, errors.ErrInvalidRequest
+	}
+
+	targetItem, err := t.todoRepository.FindById(todoId)
+
+	if err != nil {
+		return nil, errors.ErrTodoNotFound
+	}
+
+	targetItem.Title = updateTodoInput.Title
+	targetItem.Description = updateTodoInput.Description
+	targetItem.Completed = updateTodoInput.Completed
+	targetItem.DueDate = dueDate
+
+	todo, err := t.todoRepository.Update(*targetItem)
+	if err != nil {
+		return nil, errors.ErrUpdateTodoFailed
+	}
+	return todo, nil
 }

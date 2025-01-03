@@ -25,6 +25,7 @@ var (
 	ErrDuplicateEntry = NewAppError(1001, "duplicate entry")
 	ErrNotFound       = NewAppError(1002, "not found")
 	ErrInsertFailed   = NewAppError(1003, "create failed")
+	ErrUpdateFailed   = NewAppError(1004, "update failed")
 
 	// Application Errors
 	ErrUserAlreadyExists = NewAppError(2001, "user already exists")
@@ -35,4 +36,5 @@ var (
 	ErrTodoNotFound      = NewAppError(2006, "todo not found")
 	ErrCreateTodoFailed  = NewAppError(2007, "create todo failed")
 	ErrInvalidRequest    = NewAppError(2008, "invalid request")
+	ErrUpdateTodoFailed  = NewAppError(2009, "update todo failed")
 )

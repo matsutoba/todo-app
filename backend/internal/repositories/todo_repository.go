@@ -10,6 +10,8 @@ import (
 type ITodoRepository interface {
 	Create(todo models.Todo) (*models.Todo, error)
 	FindAll() ([]models.Todo, error)
+	FindById(id uint) (*models.Todo, error)
+	Update(todo models.Todo) (*models.Todo, error)
 }
 
 type TodoRepository struct {
@@ -35,4 +37,21 @@ func (r *TodoRepository) FindAll() ([]models.Todo, error) {
 		return nil, errors.ErrNotFound
 	}
 	return todos, nil
+}
+
+func (r *TodoRepository) FindById(id uint) (*models.Todo, error) {
+	var todo models.Todo
+	result := r.db.First(&todo, id)
+	if result.Error != nil {
+		return nil, errors.ErrNotFound
+	}
+	return &todo, nil
+}
+
+func (r *TodoRepository) Update(todo models.Todo) (*models.Todo, error) {
+	result := r.db.Save(&todo)
+	if result.Error != nil {
+		return nil, errors.ErrUpdateFailed
+	}
+	return &todo, nil
 }
