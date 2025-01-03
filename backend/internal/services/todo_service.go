@@ -13,6 +13,7 @@ type ITodoService interface {
 	FindAll() (*[]models.Todo, error)
 	FindById(id uint) (*models.Todo, error)
 	Update(todoId uint, todo dto.UpdateTodoInput) (*models.Todo, error)
+	Delete(id uint) error
 }
 
 type TodoService struct {
@@ -81,4 +82,12 @@ func (t *TodoService) Update(todoId uint, updateTodoInput dto.UpdateTodoInput) (
 		return nil, errors.ErrUpdateTodoFailed
 	}
 	return todo, nil
+}
+
+func (t *TodoService) Delete(id uint) error {
+	err := t.todoRepository.Delete(id)
+	if err != nil {
+		return errors.ErrTodoNotFound
+	}
+	return nil
 }

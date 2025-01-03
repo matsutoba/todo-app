@@ -12,6 +12,7 @@ type ITodoRepository interface {
 	FindAll() ([]models.Todo, error)
 	FindById(id uint) (*models.Todo, error)
 	Update(todo models.Todo) (*models.Todo, error)
+	Delete(id uint) error
 }
 
 type TodoRepository struct {
@@ -54,4 +55,12 @@ func (r *TodoRepository) Update(todo models.Todo) (*models.Todo, error) {
 		return nil, errors.ErrUpdateFailed
 	}
 	return &todo, nil
+}
+
+func (r *TodoRepository) Delete(id uint) error {
+	result := r.db.Delete(&models.Todo{}, id)
+	if result.Error != nil {
+		return errors.ErrNotFound
+	}
+	return nil
 }

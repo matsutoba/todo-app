@@ -15,6 +15,7 @@ type ITodoController interface {
 	FindAll(c *gin.Context)
 	FindById(c *gin.Context)
 	Update(c *gin.Context)
+	Delete(c *gin.Context)
 }
 
 type TodoController struct {
@@ -83,4 +84,19 @@ func (t *TodoController) Update(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": todo})
+}
+
+func (t *TodoController) Delete(c *gin.Context) {
+	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
+	if err != nil {
+		errors.HandleError(c, errors.ErrInvalidRequest)
+		return
+	}
+
+	err = t.service.Delete(uint(id))
+	if err != nil {
+		errors.HandleError(c, err)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": "OK"})
 }

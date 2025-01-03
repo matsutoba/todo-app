@@ -36,6 +36,7 @@ func RegisterRoutes(db *gorm.DB) {
 	todoRouter.GET("/:id", todoController.FindById)
 	todoRouter.POST("", todoController.Create)
 	todoRouter.PUT("/:id", todoController.Update)
+	todoRouter.DELETE("/:id", todoController.Delete)
 
 	log.Print("Server running on ", endpoint)
 
