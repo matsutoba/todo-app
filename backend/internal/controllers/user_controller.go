@@ -47,6 +47,7 @@ func (u *UserController) Login(c *gin.Context) {
 	token, err := u.service.Login(input)
 	if err != nil {
 		errors.HandleError(c, err)
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"token": token})
