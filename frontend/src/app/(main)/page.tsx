@@ -1,12 +1,20 @@
 import { get } from "@/repository/todo";
 import TaskEditButton from "../components/TaskEditButton";
 import TaskDeleteButton from "../components/TaskDeleteButton";
+import { MdAddTask } from "react-icons/md";
+import Link from "next/link";
 
 const MainPage = async () => {
   const todos = await get();
   return (
     <div>
-      <h1>タスク一覧</h1>
+      <Link
+        href="/create"
+        className="flex items-center gap-2 text-blue-500 hover:text-blue-600 justify-end mb-4"
+      >
+        <MdAddTask className="text-2xl cursor-pointer" />
+        <span>タスクを作成</span>
+      </Link>
       <table className="w-full">
         <thead className="bg-gray-200 text-left">
           <tr>
