@@ -8,6 +8,8 @@ require (
 	gorm.io/gorm v1.25.12
 )
 
+require github.com/gin-contrib/cors v1.4.0 // indirect
+
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/bytedance/sonic v1.11.6 // indirect
