@@ -4,8 +4,6 @@ import TaskDeleteButton from "../components/TaskDeleteButton";
 
 const MainPage = async () => {
   const todos = await get();
-  console.log(todos);
-
   return (
     <div>
       <h1>タスク一覧</h1>
