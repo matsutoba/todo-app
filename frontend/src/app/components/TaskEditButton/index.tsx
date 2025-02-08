@@ -2,7 +2,7 @@ import Link from "next/link";
 import { FaPen } from "react-icons/fa";
 
 interface TaskEditButtonProps {
-  id: string;
+  id: number;
 }
 
 const TaskEditButton: React.FC<TaskEditButtonProps> = ({ id }) => {

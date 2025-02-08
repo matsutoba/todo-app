@@ -1,7 +1,7 @@
 import { FaTrashAlt } from "react-icons/fa";
 
 interface TaskDeleteButtonProps {
-  id: string;
+  id: number;
 }
 
 const TaskDeleteButton: React.FC<TaskDeleteButtonProps> = ({ id }) => {
