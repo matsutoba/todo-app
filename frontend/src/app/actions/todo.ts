@@ -19,8 +19,6 @@ export const updateTodo = async (
     dueDate: todo.get("dueDate"),
   };
 
-  console.log("updateTodo", id, newTodo);
-
   const response = await fetch(`${process.env.API_URL}/todos/${id}`, {
     method: "PUT",
     body: JSON.stringify(newTodo),
@@ -31,6 +29,21 @@ export const updateTodo = async (
 
   if (!response.ok) {
     return { ...state, error: "タスクの更新に失敗しました。" };
+  }
+
+  redirect("/");
+};
+
+export const deleteTodo = async (id: number) => {
+  const response = await fetch(`${process.env.API_URL}/todos/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${(await cookies()).get("token")?.value}`,
+    },
+  });
+
+  if (!response.ok) {
+    return { error: "タスクの削除に失敗しました。" };
   }
 
   redirect("/");
