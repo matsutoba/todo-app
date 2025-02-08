@@ -7,6 +7,29 @@ export interface FormState {
   error: string;
 }
 
+export const createTodo = async (state: FormState, todo: FormData) => {
+  const newTodo = {
+    title: todo.get("title"),
+    description: todo.get("description"),
+    completed: Boolean(todo.get("completed")),
+    dueDate: todo.get("dueDate"),
+  };
+
+  const response = await fetch(`${process.env.API_URL}/todos`, {
+    method: "POST",
+    body: JSON.stringify(newTodo),
+    headers: {
+      Authorization: `Bearer ${(await cookies()).get("token")?.value}`,
+    },
+  });
+
+  if (!response.ok) {
+    return { ...state, error: "タスクの作成に失敗しました。" };
+  }
+
+  redirect("/");
+};
+
 export const updateTodo = async (
   id: number,
   state: FormState,
