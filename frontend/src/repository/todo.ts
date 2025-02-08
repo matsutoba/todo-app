@@ -1,10 +1,11 @@
 import { cookies } from "next/headers";
 
-interface Todo {
+export interface Todo {
   id: number;
   title: string;
   description: string;
   completed: boolean;
+  dueDate: string;
 }
 
 export const get = async (): Promise<Todo[]> => {
