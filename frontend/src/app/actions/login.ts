@@ -31,3 +31,8 @@ export const loginAction = async (state: FormState, formData: FormData) => {
 
   redirect("/");
 };
+
+export const logoutAction = async () => {
+  (await cookies()).delete("token");
+  redirect("/login");
+};
